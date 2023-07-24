@@ -1,18 +1,13 @@
-// trouver cmt determiner la direcion duserpent qd on a appuye syr la touche espace, pquoi elle dvient undefined qd on fait pause ?
-
-
-
 const titre=document.getElementById("titre")
 const canevas=document.getElementById("canevas")
 const canevas2=document.getElementById("canevas2")
 const body=document.getElementById("body")
-// let texte="bonjour maitre"
-
+let texte="bonjour maitre"
 let truc
 // renommer toutes ces variables pae des noms pour qu'n sache de quoi il s agit
 let i=0
 let x=5
-let x2=-5
+let x2=0
 let y =5
 let y2 =0
 let a=0;
@@ -30,8 +25,6 @@ let deplacemtCount
 let key
 
 let tableau=[]
-let randomPointX=Math.round(Math.random()*20)*5
-let randomPointY=Math.round(Math.random()*20)*5
 
 const ctx2=canevas2.getContext("2d")
 
@@ -94,17 +87,69 @@ body.addEventListener("keydown",
             setColor();
         }
         if (keyPressedValue==' ' && drawing==false) {
-            console.log("restarting")
             key=keys.find((item)=>(item.direction==`${direction}`))
-            keyPressedValue=key.event
             draw2()
             drawing=true ;
         //    keyPressedValue=keys.find((item)=>(item.direction==`${direction}`)).event
         }
     }
 )
-let texte="bonjour maitre"
-//pquoi jepx pas passer "bonjour maitre" en argumant a la place de texte ??
+
+function drawChoosedir() {
+    key= keys.find((item)=>(item.event==keyPressedValue))
+    console.log(direction)
+    //if (key==undefined) { ()=>setInterval(()=>{ctx2.fillRect(x2,y2,5,5); x+=5;} ,delai) } ceci n est pas une soluton tenable
+    
+    // if (x2==40 && direction=="L2R")  {deplacement=()=>y2+=5 ; direction="U2D"}
+    // if (y2==40 && direction=="U2D")  {deplacement=()=>x2-=5}
+    // if (x2==45 && y2>25)  {deplacement=()=>y2-=5}
+    // if (y2==95 && x2<50)  {deplacement=()=>x2+=5}
+    
+    
+    // if (y2==15) {
+    // deplacement=()=>x2-=5 }
+    // if (y2==95 ) {
+    //     deplacement()=()=>x2+=5 }
+
+    //     console.log("dfs")
+    //     // if(y2<50)
+    //     // {deplacement=()=>y2+=5 ; direction="U2D"}
+    //     // else if(y2>50)
+    //     // {deplacement=()=>y2-=5; direction="D2U"}
+    // }
+    // else {
+    deplacement=key.deplacement ;
+    direction=key.direction
+    // }
+    deplacement()
+    //console.log(x2,y2)
+    tableau.push({x2,y2})
+    //console.log("tableau des deplacements", tableau)
+    for (point of tableau) {
+        if (point.x==x2  && point.y2==y2) {
+            console.log("poruout")
+            colorFill=rgb(300, 53, 44) ;
+        }
+    }
+    ctx2.fillRect(x2,y2,5,5);
+
+
+}
+////////////
+
+
+
+
+function draw2 () {
+    const timeoutid= setTimeout(draw2, delai); //pquoi je px pas le déclarer à l'extér de draw2 sinon il se lance pas
+
+    ctx2.fillStyle = colorFill
+    drawChoosedir()
+    if (keyPressedValue==' ' && drawing==true) { // je peux pas relancer le mvmt d ici puisque c une fct recursive
+        clearTimeout(timeoutid) ; drawing=false}
+}
+draw2()
+
         // clearTimeout(timeoutid)
 
 //fonction récursive je crois, elle s'appelle elle meme
@@ -117,55 +162,6 @@ function typeWriter() {
     }
 }
 typeWriter()
-function drawChoosedir() {
-    deplacement()// demarre le snale dés le chargement
-    key= keys.find((item)=>(item.event==keyPressedValue))
-    deplacement=key.deplacement ;
-    direction=key.direction
-    console.log(direction,x2,y2)
-    if (x2==randomPointX  && y2==randomPointY) {
-        document.getElementById("titre").innerHTML=""
-        
-        texte="Vous êtes trop fort Maître"
-        typeWriter()
-    }
-    
-    //boucle pour colorer le trajet en double
-    // for (point of tableau) {
-    //     if (point.x2==x2  && point.y2==y2) {
-    //         colorFill="red" ;
-    //         
-    //     }
-    //      } 
-        
-    ctx2.fillRect(x2,y2,5,5);
-    tableau.push({x2,y2})
-
-}
-////////////
-
-function drawRandomPoint () {
-    console.log(randomPointX,randomPointY)
-    ctx2.fillStyle = "pink" ;
-    ctx2.fillRect(randomPointX,randomPointY,5,5);
-}
-
-    drawRandomPoint()
-
-function draw2 () {
-
-    const timeoutid= setTimeout(draw2, delai); //pquoi je px pas le déclarer à l'extér de draw2 sinon il se lance pas
-
-    ctx2.fillStyle = colorFill
-    drawChoosedir()
-    if (keyPressedValue==' ' && drawing==true) { // je peux pas relancer le mvmt d ici puisque c une fct recursive
-        console.log("pause")
-        clearTimeout(timeoutid) ; drawing=false} //ici la driection devient undefined ?? poquoi  ?
-}
-draw2()
-
-
-
 
 
 /////////////ddessin des cercles
