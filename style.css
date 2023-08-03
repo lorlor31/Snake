@@ -3,7 +3,6 @@
     --color2 : rgb(215, 53, 44) ;
     --color3 : rgb(34, 255, 0) ;
     --color4 : rgb(232, 2, 197) ;
-
 }
 
 body{
@@ -12,20 +11,7 @@ body{
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-#titre{
-    position: sticky;
-    top : 0 ;
-    background-color: hsl(194,71.2%, 28.6%); 
-    margin : 5% ;
-    padding:5% ;
-    width: 100vw;
-    text-align: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-style: oblique;
-    border-top: solid rgb(0, 191, 255) 2px ;
-    border-bottom: solid rgb(0, 191, 255) 2px ;
+    width: 100vW;
 }
 
 #wrapper{
@@ -33,7 +19,28 @@ body{
     flex-direction: column;
     justify-content: space-evenly ;
     align-items: center;
+    width: 100vw;
 }
+
+p{
+    padding: 0px;
+    margin: 0px;
+}
+
+#titre{
+    position: sticky;
+    top : 0 ;
+    background-color: hsl(194,71.2%, 28.6%); 
+    padding: 5% ;
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: oblique;
+    border-top: solid rgb(0, 191, 255) 2px ;
+    border-bottom: solid rgb(0, 191, 255) 2px ;
+    z-index: 7;
+    width: 100vw;
+}
+
 
 canvas{
     background-color: hsl(208,49%, 20%); 
@@ -49,8 +56,8 @@ section {
     position: sticky;
     top : 0 ;
     background-color: hsl(194,71.2%, 28.6%); 
-    margin : 1% ;
-    padding:1% ;
+    padding: 0px;
+    margin: 0px;
     width: 100vw;
     text-align: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -58,4 +65,9 @@ section {
     font-size: 12px;
     border-top: solid rgb(0, 191, 255) 2px ;
     border-bottom: solid rgb(0, 191, 255) 2px ;
+}
+
+#dowwnload{
+    color: azure;
+    background-color: forestgreen;
 }
