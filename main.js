@@ -133,6 +133,7 @@
  function drawPoint() {
     deplacement() ;
  
+
     if (keyPressedValue==' ' &&  drawing==true) {
              directionmem=direction ;
              deplacementmem=deplacement ;
