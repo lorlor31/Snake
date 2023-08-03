@@ -65,14 +65,14 @@
     let colorFillMem=color1
     let colors= [color1,color2,color3,color4]
     // Fonction pour changer la couleur du serpent
-    function setColor() {
+function setColor() {
      indexDrawColor++
      if(indexDrawColor==colors.length) {indexDrawColor=0}
      colorFill=colors[indexDrawColor]
      colorFillMem=colorFill
  }
  // tableau des touches et des directions de celles-ci
- let keys=[
+let keys=[
      {
          "event" : "ArrowRight",
          "direction" : "L2R" ,
@@ -99,98 +99,109 @@
  
      } ,
      {
-         "event" : " ",
-         "direction" : direction,
-         "deplacement": deplacement,
+         "event" : "pause",
+         "direction" : "none",
+         "deplacement": ()=>(x2=x2),
          "log" :"deplacement vari"
      }
  ]
  
  ////
- body.addEventListener("keydown",
+body.addEventListener("keydown",
      function keyDetermine(event) {
-         keyPressedValue=event.key //keyPressedValue!=' ' || 
-         if (keyPressedValue!='Alt' &&  keyPressedValue!=' ')
-         keyPressedValueMem=event.key
-         else if (keyPressedValue=='Alt') {
-             setColor();
-             keyPressedValue=keyPressedValueMem
-         }
-     console.log("keypressvalue eest",keyPressedValueMem)
-     }   
+        keyPressedValue=event.key ;
+        function keyPressValueAttribution(){
+            if (keyPressedValue=='Alt') {
+                setColor();
+            }
+
+            if (keyPressedValue==' ' &&  drawing==true) {
+                drawing=false ;
+                keyPressedValue="pause" ;
+                console.log("pause",keyPressedValueMem)
+            }
+            else if (keyPressedValue==' ' &&  drawing==false) {
+                keyPressedValue=keyPressedValueMem ;
+                drawing=true
+                console.log("restarting")
+            }
+            else{
+                switch (keyPressedValue) {
+                    case "ArrowRight" : 
+                    keyPressedValue="ArrowRight" ;
+                    keyPressedValueMem="ArrowRight" ;
+                    break ;
+                    case "ArrowLeft" : 
+                    keyPressedValue="ArrowLeft" ;
+                    keyPressedValueMem="ArrowLeft" ;
+                    break ;
+                    case "ArrowDown" : 
+                    keyPressedValue="ArrowDown" ;
+                    keyPressedValueMem="ArrowDown" ;
+                    break ;
+                    case "ArrowUp" : 
+                    keyPressedValue="ArrowUp" ;
+                    keyPressedValueMem="ArrowUp" ;
+                    break ;
+                    default :
+                    keyPressedValue=keyPressedValueMem ;
+                }
+            console.log("keypressvalueMem eest",keyPressedValue)        
+            }
+        
+        }
+        keyPressValueAttribution() ;
+        
+    }
  )
  
  //affiche un point au hasard 
- function drawRandomPoint () {
+function drawRandomPoint () {
      console.log(randomPointX,randomPointY)
      ctx2.fillStyle = "pink" ;
      ctx2.fillRect(randomPointX,randomPointY,5,5);
  }
- drawRandomPoint()
+drawRandomPoint()
  
 //  //boucle pour colorer le trajet en double
 
- function drawPoint() {
+function drawPoint() {
     deplacement() ;
- 
 
-    if (keyPressedValue==' ' &&  drawing==true) {
-             directionmem=direction ;
-             deplacementmem=deplacement ;
-             deplacement=x2=>x2
-             drawing=false
-             keyPressedValue=null
-             console.log("pause",keyPressedValue)
-         }
-    else if (keyPressedValue==' ' &&  drawing==false) {
-         key= keys.find((item)=>(item.direction==directionmem))
-         keyPressedValue=key.event
-         console.log("restarting",keyPressedValue,deplacement)
-         
-         direction=directionmem ;
-         deplacement=deplacementmem ;
-         drawing=true
-         console.log("restarting",keyPressedValue)
-     }
-     
-    if (keyPressedValue==null){
-     direction=null ;
-     console.log("nuuul",keyPressedValue)
-      }
-    else{
-        //colore si ça croise
-        for (let point of tableau) {
-            if (point.x2==x2  && point.y2==y2) {
-                 colorFill="red" ;
-            }
-        }
-        // Message si attrape le point
-        if (x2==randomPointX  && y2==randomPointY) {
-            alert("Vous êtes trop fort Maître" )
-        }
+    
+    //     //colore si ça croise
+    //     for (let point of tableau) {
+    //         if (point.x2==x2  && point.y2==y2) {
+    //              colorFill="red" ;
+    //         }
+    //     }
+    //     // Message si attrape le point
+    //     if (x2==randomPointX  && y2==randomPointY) {
+    //         alert("Vous êtes trop fort Maître" )
+    //     }
         //
         key= keys.find((item)=>(item.event==keyPressedValue))
         direction=key.direction ;
         deplacement=key.deplacement ;
         ctx2.fillStyle = colorFill
         ctx2.fillRect(x2,y2,5,5);
-        tableau.push({x2,y2})
+        tableau.push({x2,y2}) ;
+        
         colorFill=colorFillMem 
-     }
+     
      // console.log(tableau,x2,y2)
- }
+}
 
 
- const drawSnake = () =>
- (setInterval(()=>drawPoint(),delai))
+const drawSnake = () =>
+(setInterval(()=>drawPoint(),delai))
  
- drawSnake()
+drawSnake()
  
 
 // est ce qu'on pourrait utiliser les promise pour lancer typewrtier2 une fois que le 1er  a termine
 
 // //EXEMPLE D UTILISATION D UNE PROMISE
-
 let writing=true
 function typeWriter(t) {
     function resetText() {document.getElementById("titre").innerHTML ='';}
@@ -206,7 +217,7 @@ function typeWriter(t) {
      setTimeout(resetText,1500)
      
     }
- }
+}
 
 // //ESSAI D UTILISATION DUNE PROMISE POUR ENCHAINER LES 2 typewro=iter mais ç amarche pas
 // // //création d'une Promise
@@ -236,7 +247,6 @@ function typeWriter(t) {
 
 // ///////
 //bon bah pour linstant je n'arrive pas a changer ce titre et à l'affihcer progressibement
-
 
 typeWriter(texte)
 setTimeout(()=>typeWriter(texte2),4500)
