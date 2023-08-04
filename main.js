@@ -20,12 +20,12 @@
  let texte2="comment allez vous"
 
  let x2=-5
-
  let y2 =0
- let a=0;
  let indexDrawColor=0
  let drawing=true
  let delai=300
+ let canvas2Width=100
+ let canvas2Heigth=100
  
  let keyPressedValue="ArrowRight"
  let keyPressedValueMem="ArrowRight"
@@ -39,7 +39,7 @@
  let tableau=[]
  let randomPointX=Math.round(Math.random()*20)*5
  let randomPointY=Math.round(Math.random()*20)*5
- 
+ let life=3
  const ctx2=canevas2.getContext("2d")
  
  // EventListener pour le téléchargement du canevas 
@@ -168,33 +168,55 @@ drawRandomPoint()
 function drawPoint() {
     deplacement() ;
 
-    
-    //     //colore si ça croise
-    //     for (let point of tableau) {
-    //         if (point.x2==x2  && point.y2==y2) {
-    //              colorFill="red" ;
-    //         }
-    //     }
-    //     // Message si attrape le point
-    //     if (x2==randomPointX  && y2==randomPointY) {
-    //         alert("Vous êtes trop fort Maître" )
-    //     }
-        //
-        key= keys.find((item)=>(item.event==keyPressedValue))
-        direction=key.direction ;
-        deplacement=key.deplacement ;
-        ctx2.fillStyle = colorFill
-        ctx2.fillRect(x2,y2,5,5);
-        tableau.push({x2,y2}) ;
+    //Function for the end of the game
+    function endOfGame(){
         
-        colorFill=colorFillMem 
-     
-     // console.log(tableau,x2,y2)
+        let reponse = window.confirm("rejouer??") 
+        if(reponse==true) {
+            clearTimeout(timeOutDrawSnake) ; 
+            location.reload() ;
+        }
+        else if(reponse==false) {
+            clearTimeout(timeOutDrawSnake) ; 
+            //marche po location.replace("./index2.html") ;
+        }
+    }
+
+    //Gestion du croisement
+    for (let point of tableau) {
+        if (point.x2==x2  && point.y2==y2) {
+            colorFill="red" ;
+            let message
+            --life ;
+            if (life==0) {
+                alert("Tu as épuisé tous tes points de vie ;(") ;
+                endOfGame() ;
+                }
+            else{
+                message = `Tu perds un point de vie : il te reste ${life} points`
+                alert(message)
+            }
+        }
+    }
+
+    if (x2<0 || x2>100 ||y2<0 || y2>100) {
+       endOfGame()
+    }
+
+    key= keys.find((item)=>(item.event==keyPressedValue))
+    direction=key.direction ;
+    deplacement=key.deplacement ;
+    ctx2.fillStyle = colorFill
+    ctx2.fillRect(x2,y2,5,5);
+    tableau.push({x2,y2}) ;
+    colorFill=colorFillMem 
+    
+    // console.log(tableau,x2,y2)
 }
 
-
+let timeOutDrawSnake=setInterval(()=>drawPoint(),delai)
 const drawSnake = () =>
-(setInterval(()=>drawPoint(),delai))
+(timeOutDrawSnake)
  
 drawSnake()
  
